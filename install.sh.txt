@@ -1,0 +1,74 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+BLUE="\e[34m"
+CYAN="\e[36m"
+GREEN="\e[32m"
+RED="\e[31m"
+NC="\e[0m"
+
+clear
+
+banner() {
+echo -e "${CYAN}"
+cat << "EOF"
+██████╗ ███████╗████████╗██████╗  ██████╗
+██╔══██╗██╔════╝╚══██╔══╝██╔══██╗██╔═══██╗
+██████╔╝█████╗     ██║   ██████╔╝██║   ██║
+██╔═══╝ ██╔══╝     ██║   ██╔══██╗██║   ██║
+██║     ███████╗   ██║   ██║  ██║╚██████╔╝
+╚═╝     ╚══════╝   ╚═╝   ╚═╝  ╚═╝ ╚═════╝
+
+      IPv6 Pterodactyl Installer
+EOF
+echo -e "${NC}"
+}
+
+pause() {
+read -rp "Press ENTER to continue..."
+}
+
+panel_install() {
+echo -e "${GREEN}Installing Panel (demo)...${NC}"
+sleep 1
+echo "Panel installed (example)"
+pause
+}
+
+wings_install() {
+echo -e "${GREEN}Installing Wings (demo)...${NC}"
+sleep 1
+echo "Wings installed (example)"
+pause
+}
+
+system_info() {
+echo "Hostname: $(hostname)"
+echo "IPv6:"
+ip -6 addr || true
+pause
+}
+
+menu() {
+while true; do
+clear
+banner
+echo -e "${BLUE}MAIN MENU${NC}"
+echo "1) Panel Installation"
+echo "2) Wings Installation"
+echo "3) System Info"
+echo "0) Exit"
+echo
+read -rp "Select an option [0-3]: " opt
+
+case "$opt" in
+1) panel_install ;;
+2) wings_install ;;
+3) system_info ;;
+0) exit 0 ;;
+*) echo -e "${RED}Invalid option${NC}"; sleep 1 ;;
+esac
+done
+}
+
+menu
